@@ -12,6 +12,7 @@
 		64166C7F2252373400AF361C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64166C7D2252373400AF361C /* Main.storyboard */; };
 		64166C812252373400AF361C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64166C802252373400AF361C /* Assets.xcassets */; };
 		64166C842252373400AF361C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64166C822252373400AF361C /* LaunchScreen.storyboard */; };
+		64166C8C225237C300AF361C /* SwiftHoledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64166C8B225237C300AF361C /* SwiftHoledView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		64166C802252373400AF361C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		64166C832252373400AF361C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		64166C852252373400AF361C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		64166C8B225237C300AF361C /* SwiftHoledView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftHoledView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,12 +56,21 @@
 		64166C782252373400AF361C /* SwiftHoledView */ = {
 			isa = PBXGroup;
 			children = (
+				64166C8D225237C900AF361C /* SwiftHoledView */,
 				64166C792252373400AF361C /* AppDelegate.swift */,
 				64166C7B2252373400AF361C /* ViewController.swift */,
 				64166C7D2252373400AF361C /* Main.storyboard */,
 				64166C802252373400AF361C /* Assets.xcassets */,
 				64166C822252373400AF361C /* LaunchScreen.storyboard */,
 				64166C852252373400AF361C /* Info.plist */,
+			);
+			path = SwiftHoledView;
+			sourceTree = "<group>";
+		};
+		64166C8D225237C900AF361C /* SwiftHoledView */ = {
+			isa = PBXGroup;
+			children = (
+				64166C8B225237C300AF361C /* SwiftHoledView.swift */,
 			);
 			path = SwiftHoledView;
 			sourceTree = "<group>";
@@ -136,6 +147,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				64166C7C2252373400AF361C /* ViewController.swift in Sources */,
+				64166C8C225237C300AF361C /* SwiftHoledView.swift in Sources */,
 				64166C7A2252373400AF361C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
