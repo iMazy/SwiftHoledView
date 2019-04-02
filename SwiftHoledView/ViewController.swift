@@ -10,6 +10,11 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var redView: UIView!
+    @IBOutlet weak var segmentView: UISegmentedControl!
+    @IBOutlet weak var switchView: UISwitch!
+    @IBOutlet weak var textView: UITextView!
+    
     var holedView: SwiftHoledView!
     
     override func viewDidLoad() {
@@ -18,10 +23,17 @@ class ViewController: UIViewController {
         holedView = SwiftHoledView(frame: view.bounds)
         view.addSubview(holedView)
         holedView.holeViewDelegate = self
-        holedView.addHoleCircleCenteredOnPosition(CGPoint(x: 25, y: 40), diameter: 40)
-        holedView.addHoleRectOnRect(CGRect(x: 10, y: 150, width: 300, height: 30))
-//        holedView.addRoundedRectHole(onRect: <#T##CGRect#>, cornerRadius: <#T##CGFloat#>, text: <#T##String#>, onPostion: <#T##HolePosition#>, margin: <#T##CGFloat#>)
         
+        redView.layer.cornerRadius = 50
+        redView.clipsToBounds = true
+        
+        holedView.addHoleRect(redView.frame, cornerRadius: 50)
+        
+        holedView.addHoleRect(CGRect(x: 20, y: 200, width: 50, height: 50), cornerRadius: 0)
+        
+        holedView.addHoleRect(segmentView.frame)
+        
+        holedView.addRectHole(onRect: textView.frame, cornerRadius: 2, text: "hahahahah", onPostion: .top, margin: 0)
     }
 
 

@@ -9,55 +9,51 @@
 import UIKit
 
 enum HoloType {
-    case circle
-    case rect
-    case roundedRect
-    case customRect
+    case rect // 矩形
+    case roundedRect // 带圆角的矩形,当圆角等于宽/高的一半时,是圆形 round half == circle
+    case customRect // 自定义形状
 }
 
 enum HolePosition {
-    case top
-    case topRightCorner
-    case right
-    case bottomRightCorner
-    case bottom
-    case bottomLeftCorner
-    case left
-    case topLeftCorner
+    case top // 顶部
+    case topRightCorner // s右上角
+    case right // 右边
+    case bottomRightCorner // 右下角
+    case bottom // 底部
+    case bottomLeftCorner // 左下角
+    case left // 左边
+    case topLeftCorner // 左上角
 }
 
 protocol HoledViewDelegate {
+    // 点击某个 hole 时
     func holedView(_ holedView: SwiftHoledView, didSelectHoleAtIndex index: Int)
+    // 添加 label 时
     func holedView(_ holedView: SwiftHoledView, willAddLabel laber: UILabel, atIndex index: Int)
 }
 
 
+/// base hole
 class BaseHole: NSObject {
-    var holeType: HoloType = .circle
+    var holeType: HoloType = .rect
 }
-
-class CircleHole: BaseHole {
-    var centerPoint: CGPoint = .zero
-    var diameter: CGFloat = 0
-    // height scale factor（for oval hole）
-    var hScale: CGFloat = 0
-}
-
-
+/// 矩形 hole
 class RectHole: BaseHole {
     var holeRect: CGRect = .zero
 }
 
+/// 带圆角的矩形, 可以是圆形
 class RoundedRectHole: RectHole {
     var cornerRadius: CGFloat = 0
 }
 
-
+/// 自定义d形状
 class CustomRectHole: RectHole {
     var customView: UIView?
 }
 
 
+///  holed view
 class SwiftHoledView: UIView {
 
     // Array of JMHole
@@ -68,6 +64,7 @@ class SwiftHoledView: UIView {
            self.setNeedsDisplay()
         }
     }
+    
     var holeViewDelegate: HoledViewDelegate?
     lazy var textFont: UIFont = UIFont.systemFont(ofSize: 14)
 
@@ -125,20 +122,10 @@ class SwiftHoledView: UIView {
                 let rectHole = hole as! RectHole
                 let holeRectIntersection = rectHole.holeRect.intersection(self.frame)
                 UIRectFill(holeRectIntersection)
-            case .circle:
-                let circleHole = hole as! CircleHole
-                let rectInView = CGRect(x: CGFloat(floorf(Float(circleHole.centerPoint.x - circleHole.diameter / 2))),
-                                        y: CGFloat(floorf(Float(circleHole.centerPoint.y - circleHole.diameter / 2))) + circleHole.diameter * (1 - circleHole.hScale) / 2,
-                                        width: circleHole.diameter,
-                                        height: circleHole.diameter * circleHole.hScale)
-                context.setFillColor(UIColor.clear.cgColor)
-                context.setBlendMode(.clear)
-                context.fillEllipse(in: rectInView)
             default:
-                break
+                addCustomViews()
             }
         }
-        self.addCustomViews()
     }
 }
 
@@ -146,65 +133,44 @@ class SwiftHoledView: UIView {
 // MARK: - public
 extension SwiftHoledView {
     
-    public func addHoleCircleCenteredOnPosition(_ centerPoint: CGPoint, diameter: CGFloat, hScale: CGFloat = 1) -> Int  {
-        let circleHole = CircleHole()
-        circleHole.centerPoint = centerPoint
-        circleHole.diameter = diameter
-        circleHole.hScale = hScale
-        circleHole.holeType = .circle
-        self.holes.append(circleHole)
+    /// 添加矩形 hole
+    ///
+    /// - Parameters:
+    ///   - rect: 大小
+    ///   - cornerRadius: cornerRadius > 0 带圆角的矩形
+    public func addHoleRect(_ rect: CGRect, cornerRadius: CGFloat = 0) {
+        if cornerRadius == 0 {
+            let rectHole = RectHole()
+            rectHole.holeRect = rect
+            rectHole.holeType = .rect
+            self.holes.append(rectHole)
+        } else {
+            let rectHole = RoundedRectHole()
+            rectHole.holeRect = rect
+            rectHole.cornerRadius = cornerRadius
+            rectHole.holeType = .roundedRect
+            self.holes.append(rectHole)
+        }
         self.setNeedsDisplay()
-        return self.holes.firstIndex(of: circleHole) ?? 0
-    }
-
-    public func addHoleRectOnRect(_ rect: CGRect) -> Int {
-        let rectHole = RectHole()
-        rectHole.holeRect = rect
-        rectHole.holeType = .rect
-        self.holes.append(rectHole)
-        self.setNeedsDisplay()
-        return self.holes.firstIndex(of: rectHole) ?? 0
-    }
-    
-    public func addHoleRoundedRectOnRect(_ rect: CGRect, cornerRadius: CGFloat) -> Int {
-        let rectHole = RoundedRectHole()
-        rectHole.holeRect = rect
-        rectHole.cornerRadius = cornerRadius
-        rectHole.holeType = .roundedRect
-        self.holes.append(rectHole)
-        self.setNeedsDisplay()
-        return self.holes.firstIndex(of: rectHole) ?? 0
     }
     
-    public func addCustomView(_ view: UIView, onRect: CGRect) -> Int {
+    // 自定义形状
+    public func addCustomView(_ view: UIView, onRect: CGRect) {
         let customHole = CustomRectHole()
         customHole.holeRect = onRect
         customHole.customView = view
         customHole.holeType = .customRect
         self.holes.append(customHole)
         self.setNeedsDisplay()
-        return self.holes.firstIndex(of: customHole) ?? 0
     }
     
- 
-    public func addCircleHole(centeredOnPosition centerPoint: CGPoint, diameter: CGFloat, text: String, onPosition: HolePosition, margin: CGFloat) {
-        _ = self.addHoleCircleCenteredOnPosition(centerPoint, diameter: diameter)
-        _ = buildLabel(point: centerPoint, holeWidht: diameter, holeHeight: diameter, text: text, onPosition: onPosition, margin: margin)
-    }
-    
-    public func addRectHole(onRect rect: CGRect, text: String, onPostion: HolePosition, margin: CGFloat) {
-        _ = self.addHoleRectOnRect(rect)
-        _ = buildLabel(point: CGPoint(x: rect.origin.x + rect.size.width / 2, y: rect.origin.y + rect.size.height / 2), holeWidht: rect.size.width, holeHeight: rect.size.height, text: text, onPosition: onPostion, margin: margin)
-    }
-    
-    public func addRoundedRectHole(onRect rect: CGRect, cornerRadius: CGFloat, text: String, onPostion: HolePosition, margin: CGFloat) {
-        _ = self.addHoleRoundedRectOnRect(rect, cornerRadius: cornerRadius)
-        _ = buildLabel(point: CGPoint(x: rect.origin.x + rect.size.width / 2, y: rect.origin.y + rect.size.height / 2), holeWidht: rect.size.width, holeHeight: rect.size.height, text: text, onPosition: onPostion, margin: margin)
-    }
-    
-    public func addRoundedRectHole(onRect rect: CGRect, cornerRadius: CGFloat, attributedText: NSAttributedString, onPostion: HolePosition, margin: CGFloat) {
-        _ = self.addHoleRoundedRectOnRect(rect, cornerRadius: cornerRadius)
-        _ = buildLabel(point: CGPoint(x: rect.origin.x + rect.size.width / 2, y: rect.origin.y + rect.size.height / 2), holeWidht: rect.size.width, holeHeight: rect.size.height, attrText: attributedText, onPosition: onPostion, margin: margin)
+    public func addRectHole(onRect rect: CGRect, cornerRadius: CGFloat, text: String, attributedText: NSAttributedString? = nil, onPostion: HolePosition, margin: CGFloat = 0) {
+        addHoleRect(rect, cornerRadius: cornerRadius)
+        buildLabel(holeRect: rect,
+                   text: text,
+                   attrText: attributedText,
+                   onPosition: onPostion,
+                   margin: margin)
     }
 
     public func removeHoles() {
@@ -218,15 +184,19 @@ extension SwiftHoledView {
 // MARK: - private
 extension SwiftHoledView {
     
-    func buildLabel(point: CGPoint, holeWidht: CGFloat, holeHeight: CGFloat, attrText: NSAttributedString, onPosition: HolePosition, margin: CGFloat) -> UILabel {
+    func buildLabel(holeRect rect: CGRect, text: String = "", attrText: NSAttributedString? = nil, onPosition: HolePosition, margin: CGFloat) {
         
-        let text = attrText.string
-        let centerPoint = point
-        let holeWidthHalf = holeWidht / 2 + margin
-        let holeHeightHalf = holeHeight / 2 + margin
+        let attrString: NSAttributedString
+        if let _attrText = attrText {
+            attrString = _attrText
+        } else {
+            attrString = NSAttributedString(string: text, attributes: [NSAttributedString.Key.font: textFont])
+        }
+        let centerPoint = CGPoint(x: rect.origin.x + rect.size.width / 2, y: rect.origin.y + rect.size.height / 2)
+        let holeWidthHalf = rect.size.width / 2 + margin
+        let holeHeightHalf = rect.size.height / 2 + margin
         
-        let attrs = attrText.attributes(at: 0, longestEffectiveRange: nil, in: NSRange(location: 0, length: text.count))
-        let fontSize = text.size(withAttributes: attrs)
+        let fontSize = attrString.size()
         
         var x: CGFloat = centerPoint.x
         var y: CGFloat = centerPoint.y
@@ -260,28 +230,20 @@ extension SwiftHoledView {
         let frame = CGRect(x: x, y: y, width: fontSize.width, height: fontSize.height)
         
         let label = UILabel(frame: frame)
-        label.backgroundColor = UIColor.clear
+        label.backgroundColor = UIColor.red
         label.textColor = UIColor.white
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.attributedText = attrText
+        label.attributedText = attrString
         if self.holeViewDelegate != nil {
             let labels = self.holes.filter({ $0.isKind(of: CustomRectHole.self) })
             let index = labels.count - 1
             self.holeViewDelegate?.holedView(self, willAddLabel: label, atIndex: index)
         }
-        _ = addCustomView(label, onRect: label.frame)
-        return label
-    }
-    
-    func buildLabel(point: CGPoint, holeWidht: CGFloat, holeHeight: CGFloat, text: String, onPosition: HolePosition, margin: CGFloat) -> UILabel {
-        let attrString = NSAttributedString(string: text, attributes: [NSAttributedString.Key.font: self.textFont])
-        let label = self.buildLabel(point: point, holeWidht: holeWidht, holeHeight: holeHeight, attrText: attrString, onPosition: onPosition, margin: margin)
-        return label
+        addCustomView(label, onRect: label.frame)
     }
     
     /*
-     case circle
      case rect
      case roundedRect
      case customRect
@@ -293,12 +255,6 @@ extension SwiftHoledView {
             case .rect, .roundedRect, .customRect:
                 let rectHole = hole as! RectHole
                 if rectHole.holeRect.contains(touchLocation) {
-                    idxToReturn = index
-                }
-            case .circle:
-                let circleHole = hole as! CircleHole
-                let rectInView = CGRect(x: CGFloat(floorf(Float(circleHole.centerPoint.x - circleHole.diameter / 2))), y: CGFloat(floorf(Float(circleHole.centerPoint.y - circleHole.diameter / 2))), width: circleHole.diameter, height: circleHole.diameter)
-                if rectInView.contains(touchLocation) {
                     idxToReturn = index
                 }
             }
