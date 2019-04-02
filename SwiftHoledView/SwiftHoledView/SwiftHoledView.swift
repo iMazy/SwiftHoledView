@@ -93,7 +93,9 @@ class SwiftHoledView: UIView {
     @objc func tapGestureDetected(_ geture: UITapGestureRecognizer) {
         let touchLocation = geture.location(in: self)
         let index = self.holeViewIndexForAtPoint(touchLocation)
-        holeViewDelegate?.holedView(self, didSelectHoleAtIndex: index)
+        if index < 999 {        
+            holeViewDelegate?.holedView(self, didSelectHoleAtIndex: index)
+        }
     }
     
     override func draw(_ rect: CGRect) {
@@ -230,7 +232,7 @@ extension SwiftHoledView {
         let frame = CGRect(x: x, y: y, width: fontSize.width, height: fontSize.height)
         
         let label = UILabel(frame: frame)
-        label.backgroundColor = UIColor.red
+        label.backgroundColor = UIColor.clear
         label.textColor = UIColor.white
         label.numberOfLines = 0
         label.textAlignment = .center
@@ -249,7 +251,7 @@ extension SwiftHoledView {
      case customRect
      */
     func holeViewIndexForAtPoint(_ touchLocation: CGPoint) -> Int {
-        var idxToReturn: Int = 0
+        var idxToReturn: Int = 999
         self.holes.enumerated().forEach { (index, hole) in
             switch hole.holeType {
             case .rect, .roundedRect, .customRect:
@@ -262,11 +264,11 @@ extension SwiftHoledView {
         return idxToReturn
     }
     
-    func removeCustomViews() {
+    private func removeCustomViews() {
         self.holes.filter({ $0.isKind(of: CustomRectHole.self) }).map({ $0 as! CustomRectHole } ).forEach({ $0.customView?.removeFromSuperview() })
     }
     
-    func addCustomViews() {
+    private func addCustomViews() {
         self.holes.filter({ $0.isKind(of: CustomRectHole.self) }).map({ $0 as! CustomRectHole } ).forEach { (customHole) in
             guard let customView = customHole.customView else {
                 return

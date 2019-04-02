@@ -13,6 +13,7 @@
 		64166C812252373400AF361C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64166C802252373400AF361C /* Assets.xcassets */; };
 		64166C842252373400AF361C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64166C822252373400AF361C /* LaunchScreen.storyboard */; };
 		64166C8C225237C300AF361C /* SwiftHoledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64166C8B225237C300AF361C /* SwiftHoledView.swift */; };
+		64FDDBB522535501007A0F90 /* DemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64FDDBB422535501007A0F90 /* DemoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		64166C832252373400AF361C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		64166C852252373400AF361C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		64166C8B225237C300AF361C /* SwiftHoledView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftHoledView.swift; sourceTree = "<group>"; };
+		64FDDBB422535501007A0F90 /* DemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				64166C8D225237C900AF361C /* SwiftHoledView */,
 				64166C792252373400AF361C /* AppDelegate.swift */,
 				64166C7B2252373400AF361C /* ViewController.swift */,
+				64FDDBB422535501007A0F90 /* DemoViewController.swift */,
 				64166C7D2252373400AF361C /* Main.storyboard */,
 				64166C802252373400AF361C /* Assets.xcassets */,
 				64166C822252373400AF361C /* LaunchScreen.storyboard */,
@@ -149,6 +152,7 @@
 				64166C7C2252373400AF361C /* ViewController.swift in Sources */,
 				64166C8C225237C300AF361C /* SwiftHoledView.swift in Sources */,
 				64166C7A2252373400AF361C /* AppDelegate.swift in Sources */,
+				64FDDBB522535501007A0F90 /* DemoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

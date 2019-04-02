@@ -34,6 +34,8 @@ class ViewController: UIViewController {
         holedView.addHoleRect(segmentView.frame)
         
         holedView.addRectHole(onRect: textView.frame, cornerRadius: 2, text: "hahahahah", onPostion: .top, margin: 0)
+        
+        holedView.addCustomView(switchView, onRect: textView.frame)
     }
 
 
@@ -42,6 +44,9 @@ class ViewController: UIViewController {
 extension ViewController: HoledViewDelegate {
     func holedView(_ holedView: SwiftHoledView, didSelectHoleAtIndex index: Int) {
         print(index)
+        if index == 3 {
+            holedView.removeFromSuperview()
+        }
     }
     
     func holedView(_ holedView: SwiftHoledView, willAddLabel laber: UILabel, atIndex index: Int) {
