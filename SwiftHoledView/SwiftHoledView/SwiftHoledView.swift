@@ -93,9 +93,9 @@ class SwiftHoledView: UIView {
     @objc func tapGestureDetected(_ geture: UITapGestureRecognizer) {
         let touchLocation = geture.location(in: self)
         let index = self.holeViewIndexForAtPoint(touchLocation)
-        if index < 999 {        
-            holeViewDelegate?.holedView(self, didSelectHoleAtIndex: index)
-        }
+//        if index >= 0 {
+        holeViewDelegate?.holedView(self, didSelectHoleAtIndex: index)
+//        }
     }
     
     override func draw(_ rect: CGRect) {
@@ -251,7 +251,7 @@ extension SwiftHoledView {
      case customRect
      */
     func holeViewIndexForAtPoint(_ touchLocation: CGPoint) -> Int {
-        var idxToReturn: Int = 999
+        var idxToReturn: Int = -1
         self.holes.enumerated().forEach { (index, hole) in
             switch hole.holeType {
             case .rect, .roundedRect, .customRect:

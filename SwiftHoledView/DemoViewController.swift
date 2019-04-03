@@ -22,17 +22,18 @@ class DemoViewController: UITableViewController {
 
         edgesForExtendedLayout = []
         
+        followButton.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.8).cgColor
+        followButton.layer.borderWidth = 0.5
+        followButton.layer.cornerRadius = 5
+        
         holedView = SwiftHoledView(frame: view.bounds)
         
         holedView!.holeViewDelegate = self
         
-//        holedView?.addHoleRect(iconImageView.frame, cornerRadius: iconImageView.frame.height / 2)
-        
-        holedView?.addRectHole(onRect: iconImageView.frame, cornerRadius: iconImageView.frame.height / 2, text: "ddddddddddd", onPostion: .right, margin: 10)
+        holedView?.addRectHole(onRect: iconImageView.frame, cornerRadius: iconImageView.frame.height / 2, text: "user profile", onPostion: .right, margin: 10)
         
         let followBtnFrameInTableView = tableView.convert(followButton.frame, from: followButton.superview?.superview)
-        holedView?.addHoleRect(followBtnFrameInTableView)
-        holedView?.addRectHole(onRect: followBtnFrameInTableView, cornerRadius: 0, text: "follow action", onPostion: .bottom, margin: 10)
+        holedView?.addRectHole(onRect: followBtnFrameInTableView, cornerRadius: 5, text: "follow action", onPostion: .bottom, margin: 10)
         
         
         holedView?.addHoleRect(firstCell.frame)
@@ -56,7 +57,7 @@ class DemoViewController: UITableViewController {
         label.layer.borderWidth = 1.0
         label.layer.cornerRadius = 10
         label.textColor = UIColor.white
-        label.text = "This control can be use to Highlight informations."
+        label.text = "The description of tableView. The description of tableView"
         label.numberOfLines = 2
         label.font = UIFont.systemFont(ofSize: 14)
         label.textAlignment = .center
@@ -69,13 +70,13 @@ extension DemoViewController: HoledViewDelegate {
     
     func holedView(_ holedView: SwiftHoledView, didSelectHoleAtIndex index: Int) {
         print(index)
-        if index == 3 {
+        if index < 0  {
             holedView.removeFromSuperview()
         }
     }
     
     func holedView(_ holedView: SwiftHoledView, willAddLabel laber: UILabel, atIndex index: Int) {
-        print("willAddLabel-----------")
+        print("-----------willAddLabel-----------")
     }
 }
 
