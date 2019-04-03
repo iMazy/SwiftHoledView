@@ -13,7 +13,7 @@
 		64166C812252373400AF361C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64166C802252373400AF361C /* Assets.xcassets */; };
 		64166C842252373400AF361C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64166C822252373400AF361C /* LaunchScreen.storyboard */; };
 		64166C8C225237C300AF361C /* SwiftHoledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64166C8B225237C300AF361C /* SwiftHoledView.swift */; };
-		64CA925B225492D1009C7E7A /* demo.png in Resources */ = {isa = PBXBuildFile; fileRef = 64CA925A225492D1009C7E7A /* demo.png */; };
+		64CA925D22549383009C7E7A /* demo.png in Resources */ = {isa = PBXBuildFile; fileRef = 64CA925C22549383009C7E7A /* demo.png */; };
 		64FDDBB522535501007A0F90 /* DemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64FDDBB422535501007A0F90 /* DemoViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -26,7 +26,7 @@
 		64166C832252373400AF361C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		64166C852252373400AF361C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		64166C8B225237C300AF361C /* SwiftHoledView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftHoledView.swift; sourceTree = "<group>"; };
-		64CA925A225492D1009C7E7A /* demo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = demo.png; sourceTree = "<group>"; };
+		64CA925C22549383009C7E7A /* demo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = demo.png; sourceTree = "<group>"; };
 		64FDDBB422535501007A0F90 /* DemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -66,7 +66,7 @@
 				64FDDBB422535501007A0F90 /* DemoViewController.swift */,
 				64166C7D2252373400AF361C /* Main.storyboard */,
 				64166C802252373400AF361C /* Assets.xcassets */,
-				64CA925A225492D1009C7E7A /* demo.png */,
+				64CA925C22549383009C7E7A /* demo.png */,
 				64166C822252373400AF361C /* LaunchScreen.storyboard */,
 				64166C852252373400AF361C /* Info.plist */,
 			);
@@ -139,7 +139,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				64CA925B225492D1009C7E7A /* demo.png in Resources */,
+				64CA925D22549383009C7E7A /* demo.png in Resources */,
 				64166C842252373400AF361C /* LaunchScreen.storyboard in Resources */,
 				64166C812252373400AF361C /* Assets.xcassets in Resources */,
 				64166C7F2252373400AF361C /* Main.storyboard in Resources */,
